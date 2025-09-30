@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heavy Vinyl</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+            background: #1a0000;
+        }
+        
+        body::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 30% 50%, rgba(80,0,0,.6), transparent 50%),
+                        radial-gradient(circle at 70% 50%, rgba(60,0,0,.5), transparent 50%),
+                        radial-gradient(circle at 50% 30%, rgba(70,0,0,.4), transparent 50%);
+            filter: blur(80px);
+            animation: bg 20s ease-in-out infinite;
+        }
+        
+        @keyframes bg {
+            0%, 100% { transform: translate(-25%, -25%) rotate(0deg); }
+            33% { transform: translate(-30%, -20%) rotate(120deg); }
+            66% { transform: translate(-20%, -30%) rotate(240deg); }
+        }
+        
+        .title {
+            position: absolute;
+            top: 15%;
+            font: 700 52px/1 -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+            background: linear-gradient(90deg, #fff, #b0b0b0, #fff, #d0d0d0, #fff);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -.8px;
+            filter: drop-shadow(0 0 20px rgba(139,0,0,.8)) drop-shadow(0 0 40px rgba(139,0,0,.5)) drop-shadow(0 4px 8px rgba(0,0,0,.9));
+            animation: flow 6s ease-in-out infinite, pulse 4s ease-in-out infinite;
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: opacity 1.5s, transform 1.5s;
+            z-index: 2;
+        }
+        
+        .title.visible { opacity: 1; transform: translateY(0); }
+        
+        @keyframes flow {
+            0%, 100% { background-position: 0% center; }
+            50% { background-position: 200% center; }
+        }
+        
+        @keyframes pulse {
+            0%, 100% { filter: drop-shadow(0 0 20px rgba(139,0,0,.8)) drop-shadow(0 0 40px rgba(139,0,0,.5)) drop-shadow(0 4px 8px rgba(0,0,0,.9)); }
+            50% { filter: drop-shadow(0 0 30px rgba(139,0,0,1)) drop-shadow(0 0 60px rgba(139,0,0,.7)) drop-shadow(0 4px 8px rgba(0,0,0,.9)); }
+        }
+        
+        .vinyl-container {
+            width: 400px;
+            height: 400px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transform: scale(.8);
+            transition: opacity 2s, transform 2s;
+            z-index: 1;
+        }
+        
+        .vinyl-container.visible { opacity: 1; transform: scale(1); }
+        
+        .vinyl {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            animation: spin 4.5s linear infinite;
+            box-shadow: 0 0 40px rgba(0,0,0,.5);
+        }
+        
+        @keyframes spin { to { transform: rotate(360deg); } }
+        
+        .play-btn {
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #0a0000, #1a0000, #000);
+            border: 3px solid rgba(80,0,0,.6);
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+            transition: all .3s;
+            box-shadow: 0 8px 32px rgba(0,0,0,.8), inset 0 2px 8px rgba(139,0,0,.3);
+        }
+        
+        .play-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 12px 40px rgba(80,0,0,.9), inset 0 2px 8px rgba(139,0,0,.4);
+            border-color: rgba(139,0,0,.8);
+        }
+        
+        .play-btn.fade { opacity: 0; transform: scale(.7); transition: opacity .7s, transform .7s; pointer-events: none; }
+        
+        .play-icon {
+            width: 0;
+            height: 0;
+            border-left: 32px solid rgba(255,255,255,.95);
+            border-top: 22px solid transparent;
+            border-bottom: 22px solid transparent;
+            margin-left: 8px;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,.3));
+        }
+        
+        .lyrics {
+            position: absolute;
+            bottom: 15%;
+            width: 800px;
+            max-width: 90%;
+            height: 80px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2;
+            opacity: 0;
+            transition: opacity 1.5s;
+        }
+        
+        .lyrics.visible { opacity: 1; }
+        
+        .lyrics span {
+            font: 500 28px/1.6 -apple-system, BlinkMacSystemFont, 'Circular', 'Segoe UI', sans-serif;
+            color: rgba(255,255,255,.95);
+            text-align: center;
+            position: absolute;
+            opacity: 0;
+            transform: translateX(-30px);
+            text-shadow: 0 2px 8px rgba(0,0,0,.7);
+            letter-spacing: .3px;
+        }
+        
+        .lyrics span.in { animation: in 1.2s cubic-bezier(.4,0,.2,1) forwards; }
+        .lyrics span.out { animation: out 1s cubic-bezier(.4,0,.2,1) forwards; }
+        
+        @keyframes in {
+            0% { opacity: 0; transform: translateX(-40px); filter: blur(8px); }
+            60% { opacity: .7; filter: blur(2px); }
+            100% { opacity: 1; transform: translateX(0); filter: blur(0); }
+        }
+        
+        @keyframes out {
+            0% { opacity: 1; transform: translateX(0); filter: blur(0); }
+            40% { opacity: .5; filter: blur(2px); }
+            100% { opacity: 0; transform: translateX(40px); filter: blur(8px); }
+        }
+        
+        @media (max-width: 768px) { .vinyl-container { width: 300px; height: 300px; } }
+        @media (max-width: 480px) { .vinyl-container { width: 250px; height: 250px; } }
+    </style>
+</head>
+<body>
+    <button class="play-btn" id="btn"><div class="play-icon"></div></button>
+    <div class="title" id="title">Heavy - The Marias</div>
+    <div class="vinyl-container" id="vc"><img src="heavy_vinyl.png" alt="Heavy Vinyl" class="vinyl" id="img"></div>
+    <div class="lyrics" id="lyr"><span id="line"></span></div>
+    <audio id="aud" loop preload="auto"><source src="Heavy_themarias.mp3" type="audio/mpeg"></audio>
+
+    <script>
+        const btn = document.getElementById('btn');
+        const vc = document.getElementById('vc');
+        const title = document.getElementById('title');
+        const lyr = document.getElementById('lyr');
+        const line = document.getElementById('line');
+        const aud = document.getElementById('aud');
+        
+        const lyrics = [
+            {t:14.04,l:"I'm heavy"},{t:18.83,l:"I'm by your side"},{t:24.09,l:"Forget me"},
+            {t:26.49,l:"'Cause I know what I need"},{t:28.70,l:"Like a loser like me could be fine"},
+            {t:36.36,l:"I'm heavy"},{t:41.26,l:"Alone inside"},{t:46.13,l:"Don't tell me what I want, what I need"},
+            {t:50.74,l:"Like a loser like me will be fine"},{t:57.04,l:"Maybe I'm living in my head"},
+            {t:62.12,l:"Maybe I'm living to pretend"},{t:67.17,l:"Maybe I wanna stay in bed"},
+            {t:70.28,l:"Far from the weight of the world in my hands"},{t:74.60,l:"'Cause they don't understand"},
+            {t:101.94,l:"Is someone telling me don't get in the water?"},{t:107.30,l:"What have I done?"},
+            {t:112.07,l:"I don't wanna get lost inside the color under my tongue"},
+            {t:121.16,l:"'Cause I don't wanna be in love with another"},{t:125.87,l:"Even in another life"},
+            {t:131.37,l:"Can someone tell me it's alright to be covered"},{t:135.53,l:"Underneath the covers? But I"},
+            {t:139.81,l:"No, I don't need to sleep anymore"},{t:146.03,l:"Is someone banging at my door?"},
+            {t:150.80,l:"When I just wanna be alone?"},{t:156.12,l:"Is someone banging at my door?"},
+            {t:160.93,l:"Je ne sais pas qui est ici"},{t:165.64,l:"Is someone banging at my door"},
+            {t:171.04,l:"When I just wanna be alone"},{t:175.91,l:"Is someone banging at my door, door, door, door?"},
+            {t:182.36,l:"Door, door, door, door, at my door"},{t:190.78,l:"Is someone banging at my door?"},
+            {t:195.56,l:"'Cause I just wanna be alone"},{t:200.49,l:"Yeah, I just wanna be alone"},
+            {t:205.97,l:"(I just wanna be alone)"},{t:210.45,l:"(Yeah, I just wanna be alone)"},
+            {t:215.88,l:"(I just wanna be alone)"}
+        ];
+        
+        let idx = -1;
+        
+        btn.onclick = () => {
+            btn.classList.add('fade');
+            aud.currentTime = 99;
+            aud.volume = 0;
+            
+            aud.play().then(() => {
+                let v = 0;
+                const fade = setInterval(() => {
+                    if (v < 1) { v += .02; aud.volume = Math.min(v, 1); }
+                    else clearInterval(fade);
+                }, 40);
+            });
+            
+            setTimeout(() => vc.classList.add('visible'), 300);
+            setTimeout(() => { title.classList.add('visible'); lyr.classList.add('visible'); }, 1500);
+            setTimeout(() => btn.style.display = 'none', 700);
+            
+            setInterval(() => {
+                const t = aud.currentTime;
+                for (let i = 0; i < lyrics.length; i++) {
+                    if (t >= lyrics[i].t && (i === lyrics.length - 1 || t < lyrics[i + 1].t)) {
+                        if (idx !== i) {
+                            if (idx >= 0) { line.classList.remove('in'); line.classList.add('out'); }
+                            idx = i;
+                            setTimeout(() => {
+                                line.classList.remove('out');
+                                line.textContent = lyrics[i].l;
+                                line.classList.add('in');
+                            }, idx === 0 ? 0 : 600);
+                        }
+                        break;
+                    }
+                }
+            }, 100);
+        };
+        
+        document.getElementById('img').onerror = () => {
+            vc.innerHTML = `<div style="width:100%;height:100%;border-radius:50%;background:radial-gradient(circle,#1a1a1a 30%,#000 70%);animation:spin 4.5s linear infinite;display:flex;justify-content:center;align-items:center;box-shadow:0 0 40px rgba(0,0,0,.5)"><div style="width:80px;height:80px;border-radius:50%;background:#8b0000;border:3px solid #000"></div></div>`;
+        };
+    </script>
+</body>
+</html>
