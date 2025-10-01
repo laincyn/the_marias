@@ -11,13 +11,17 @@
   --red-secondary: #1a0000;
   --blue-primary: #003c8b;
   --blue-secondary: #000a1a;
+  --teal-primary: #008080;
+  --teal-secondary: #001a1a;
   --transition-smooth: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 body{width:100vw;height:100vh;display:flex;justify-content:center;align-items:center;overflow:hidden;position:relative;background:var(--red-secondary);transition:var(--transition-smooth)}
 body.blue-theme{background:var(--blue-secondary)}
+body.teal-theme{background:var(--teal-secondary)}
 body::before{content:'';position:absolute;width:200%;height:200%;background:radial-gradient(circle at 30% 50%,rgba(80,0,0,.6),transparent 50%),radial-gradient(circle at 70% 50%,rgba(60,0,0,.5),transparent 50%),radial-gradient(circle at 50% 30%,rgba(70,0,0,.4),transparent 50%);filter:blur(80px);animation:bg 20s ease-in-out infinite;transition:var(--transition-smooth)}
 body.blue-theme::before{background:radial-gradient(circle at 30% 50%,rgba(0,40,80,.6),transparent 50%),radial-gradient(circle at 70% 50%,rgba(0,30,60,.5),transparent 50%),radial-gradient(circle at 50% 30%,rgba(0,35,70,.4),transparent 50%)}
+body.teal-theme::before{background:radial-gradient(circle at 30% 50%,rgba(0,80,80,.6),transparent 50%),radial-gradient(circle at 70% 50%,rgba(0,60,60,.5),transparent 50%),radial-gradient(circle at 50% 30%,rgba(0,70,70,.4),transparent 50%)}
 @keyframes bg{0%,100%{transform:translate(-25%,-25%) rotate(0)}33%{transform:translate(-30%,-20%) rotate(120deg)}66%{transform:translate(-20%,-30%) rotate(240deg)}}
 
 /* Enhanced floating particles */
@@ -35,11 +39,14 @@ body.blue-theme::before{background:radial-gradient(circle at 30% 50%,rgba(0,40,8
 
 .title{position:absolute;top:15%;font:700 52px/1.2 -apple-system,BlinkMacSystemFont,'SF Pro Display',sans-serif;background:linear-gradient(90deg,#fff,#b0b0b0,#fff,#d0d0d0,#fff);background-size:200% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:-.5px;filter:drop-shadow(0 0 20px rgba(139,0,0,.8)) drop-shadow(0 0 40px rgba(139,0,0,.5)) drop-shadow(0 4px 8px rgba(0,0,0,.9));animation:flow 6s ease-in-out infinite,pulse 4s ease-in-out infinite;opacity:0;transform:translateY(-20px);transition:var(--transition-smooth);z-index:2;padding:0 10px}
 body.blue-theme .title{filter:drop-shadow(0 0 20px rgba(0,60,139,.8)) drop-shadow(0 0 40px rgba(0,60,139,.5)) drop-shadow(0 4px 8px rgba(0,0,0,.9))}
+body.teal-theme .title{filter:drop-shadow(0 0 20px rgba(0,128,128,.8)) drop-shadow(0 0 40px rgba(0,128,128,.5)) drop-shadow(0 4px 8px rgba(0,0,0,.9))}
 .title.visible{opacity:1;transform:translateY(0)}
 @keyframes flow{0%,100%{background-position:0 center}50%{background-position:200% center}}
 @keyframes pulse{0%,100%{filter:drop-shadow(0 0 20px rgba(139,0,0,.8)) drop-shadow(0 0 40px rgba(139,0,0,.5)) drop-shadow(0 4px 8px rgba(0,0,0,.9))}50%{filter:drop-shadow(0 0 30px rgba(139,0,0,1)) drop-shadow(0 0 60px rgba(139,0,0,.7)) drop-shadow(0 4px 8px rgba(0,0,0,.9))}}
 body.blue-theme .title{animation:flow 6s ease-in-out infinite,pulseBlue 4s ease-in-out infinite}
+body.teal-theme .title{animation:flow 6s ease-in-out infinite,pulseTeal 4s ease-in-out infinite}
 @keyframes pulseBlue{0%,100%{filter:drop-shadow(0 0 20px rgba(0,60,139,.8)) drop-shadow(0 0 40px rgba(0,60,139,.5)) drop-shadow(0 4px 8px rgba(0,0,0,.9))}50%{filter:drop-shadow(0 0 30px rgba(0,80,180,1)) drop-shadow(0 0 60px rgba(0,60,139,.7)) drop-shadow(0 4px 8px rgba(0,0,0,.9))}}
+@keyframes pulseTeal{0%,100%{filter:drop-shadow(0 0 20px rgba(0,128,128,.8)) drop-shadow(0 0 40px rgba(0,128,128,.5)) drop-shadow(0 4px 8px rgba(0,0,0,.9))}50%{filter:drop-shadow(0 0 30px rgba(0,180,180,1)) drop-shadow(0 0 60px rgba(0,128,128,.7)) drop-shadow(0 4px 8px rgba(0,0,0,.9))}}
 
 .vinyl-container{width:400px;height:400px;display:flex;justify-content:center;align-items:center;opacity:0;transform:scale(.8);transition:var(--transition-smooth);z-index:1;position:relative;cursor:pointer;}
 .vinyl-container::before {
@@ -56,6 +63,9 @@ body.blue-theme .title{animation:flow 6s ease-in-out infinite,pulseBlue 4s ease-
 }
 body.blue-theme .vinyl-container::before {
   background: radial-gradient(circle, rgba(0,60,139,0.2) 0%, transparent 70%);
+}
+body.teal-theme .vinyl-container::before {
+  background: radial-gradient(circle, rgba(0,128,128,0.2) 0%, transparent 70%);
 }
 .vinyl-container.visible{opacity:1;transform:scale(1)}
 .vinyl-container.visible::before {
@@ -100,10 +110,12 @@ body.blue-theme .vinyl-container::before {
 
 .nav{position:absolute;top:30px;left:50%;transform:translateX(-50%) translateY(-40px);display:flex;gap:20px;z-index:100;opacity:0;pointer-events:none;transition:var(--transition-smooth);padding:12px 24px;background:linear-gradient(135deg,rgba(20,0,0,.6) 0%,rgba(40,0,10,.5) 50%,rgba(20,0,0,.6) 100%);border-radius:50px;backdrop-filter:blur(20px) saturate(180%);border:1px solid rgba(139,0,0,.3);box-shadow:0 8px 32px rgba(0,0,0,.4),0 0 0 1px rgba(255,255,255,.05) inset,0 0 60px rgba(139,0,0,.2)}
 body.blue-theme .nav{background:linear-gradient(135deg,rgba(0,10,20,.6) 0%,rgba(0,20,40,.5) 50%,rgba(0,10,20,.6) 100%);border:1px solid rgba(0,60,139,.3);box-shadow:0 8px 32px rgba(0,0,0,.4),0 0 0 1px rgba(255,255,255,.05) inset,0 0 60px rgba(0,60,139,.2)}
+body.teal-theme .nav{background:linear-gradient(135deg,rgba(0,20,20,.6) 0%,rgba(0,40,40,.5) 50%,rgba(0,20,20,.6) 100%);border:1px solid rgba(0,128,128,.3);box-shadow:0 8px 32px rgba(0,0,0,.4),0 0 0 1px rgba(255,255,255,.05) inset,0 0 60px rgba(0,128,128,.2)}
 .nav.visible{opacity:1;transform:translateX(-50%) translateY(0);pointer-events:auto}
 
 .nav a{padding:11px 26px;background:linear-gradient(135deg,rgba(139,0,0,.18),rgba(80,0,0,.28));border:1.5px solid rgba(139,0,0,.45);border-radius:28px;color:rgba(255,255,255,.96);text-decoration:none;font:600 13px/1.4 -apple-system,BlinkMacSystemFont,'SF Pro Display',sans-serif;letter-spacing:.4px;text-transform:uppercase;transition:var(--transition-smooth);backdrop-filter:blur(12px) saturate(150%);box-shadow:0 4px 16px rgba(0,0,0,.35),0 0 0 1px rgba(255,255,255,.1) inset,0 2px 4px rgba(139,0,0,.2) inset;position:relative;overflow:hidden}
 body.blue-theme .nav a{background:linear-gradient(135deg,rgba(0,60,139,.18),rgba(0,40,80,.28));border:1.5px solid rgba(0,60,139,.45);box-shadow:0 4px 16px rgba(0,0,0,.35),0 0 0 1px rgba(255,255,255,.1) inset,0 2px 4px rgba(0,60,139,.2) inset}
+body.teal-theme .nav a{background:linear-gradient(135deg,rgba(0,128,128,.18),rgba(0,80,80,.28));border:1.5px solid rgba(0,128,128,.45);box-shadow:0 4px 16px rgba(0,0,0,.35),0 0 0 1px rgba(255,255,255,.1) inset,0 2px 4px rgba(0,128,128,.2) inset}
 .nav a::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.15),transparent);transition:left .5s ease-out}
 .nav a::after{content:'';position:absolute;top:0;left:0;right:0;bottom:0;border-radius:28px;background:linear-gradient(135deg,rgba(255,255,255,.08),transparent);opacity:0;transition:var(--transition-smooth)}
 .nav a:hover::before{left:100%}
@@ -114,16 +126,20 @@ body.blue-theme .nav a{background:linear-gradient(135deg,rgba(0,60,139,.18),rgba
 .nav a:nth-child(3):hover{background:linear-gradient(135deg,rgba(25,40,75,.5),rgba(18,30,60,.6));border-color:rgba(50,75,130,.7);box-shadow:0 10px 30px rgba(25,40,75,.5),0 0 40px rgba(40,60,110,.35),0 0 0 1px rgba(255,255,255,.18) inset}
 .nav a:active{transform:translateY(-2px) scale(1.04)}
 
-.switch-btn{position:fixed;right:30px;top:50%;transform:translateY(-50%);width:52px;height:130px;background:linear-gradient(135deg,rgba(139,0,0,.22),rgba(80,0,0,.32));border:2px solid rgba(139,0,0,.55);border-radius:28px;color:rgba(255,255,255,.96);font-size:34px;cursor:pointer;z-index:100;opacity:0;pointer-events:none;transition:var(--transition-smooth);backdrop-filter:blur(16px) saturate(150%);box-shadow:0 6px 20px rgba(0,0,0,.45),0 0 0 1px rgba(255,255,255,.1) inset,0 2px 6px rgba(139,0,0,.25) inset;display:flex;align-items:center;justify-content:center;font-weight:300}
+.switch-btn{position:fixed;top:50%;transform:translateY(-50%);width:52px;height:130px;background:linear-gradient(135deg,rgba(139,0,0,.22),rgba(80,0,0,.32));border:2px solid rgba(139,0,0,.55);border-radius:28px;color:rgba(255,255,255,.96);font-size:34px;cursor:pointer;z-index:100;opacity:0;pointer-events:none;transition:var(--transition-smooth);backdrop-filter:blur(16px) saturate(150%);box-shadow:0 6px 20px rgba(0,0,0,.45),0 0 0 1px rgba(255,255,255,.1) inset,0 2px 6px rgba(139,0,0,.25) inset;display:flex;align-items:center;justify-content:center;font-weight:300}
 .switch-btn::before{content:'';position:absolute;top:-2px;left:-2px;right:-2px;bottom:-2px;border-radius:28px;background:linear-gradient(135deg,rgba(139,0,0,.3),transparent,rgba(139,0,0,.15));opacity:0;transition:var(--transition-smooth);pointer-events:none}
 .switch-btn.visible{opacity:1;pointer-events:auto}
-.switch-btn.left-side{right:auto;left:30px}
+.switch-btn.left-side{left:30px}
+.switch-btn.right-side{right:30px}
 .switch-btn:hover{transform:translateY(-50%) scale(1.1);background:linear-gradient(135deg,rgba(139,0,0,.4),rgba(110,0,0,.5));border-color:rgba(160,0,0,.85);box-shadow:0 10px 32px rgba(139,0,0,.6),0 0 45px rgba(139,0,0,.4),0 0 0 1px rgba(255,255,255,.15) inset;text-shadow:0 0 12px rgba(255,255,255,.4)}
 .switch-btn:hover::before{opacity:1}
 .switch-btn:active{transform:translateY(-50%) scale(1.02)}
 body.blue-theme .switch-btn{background:linear-gradient(135deg,rgba(0,60,139,.22),rgba(0,40,80,.32));border:2px solid rgba(0,60,139,.55);box-shadow:0 6px 20px rgba(0,0,0,.45),0 0 0 1px rgba(255,255,255,.1) inset,0 2px 6px rgba(0,60,139,.25) inset}
 body.blue-theme .switch-btn::before{background:linear-gradient(135deg,rgba(0,60,139,.3),transparent,rgba(0,60,139,.15))}
 body.blue-theme .switch-btn:hover{background:linear-gradient(135deg,rgba(0,75,155,.4),rgba(0,55,110,.5));border-color:rgba(0,90,165,.85);box-shadow:0 10px 32px rgba(0,60,139,.6),0 0 45px rgba(0,60,139,.4),0 0 0 1px rgba(255,255,255,.15) inset}
+body.teal-theme .switch-btn{background:linear-gradient(135deg,rgba(0,128,128,.22),rgba(0,80,80,.32));border:2px solid rgba(0,128,128,.55);box-shadow:0 6px 20px rgba(0,0,0,.45),0 0 0 1px rgba(255,255,255,.1) inset,0 2px 6px rgba(0,128,128,.25) inset}
+body.teal-theme .switch-btn::before{background:linear-gradient(135deg,rgba(0,128,128,.3),transparent,rgba(0,128,128,.15))}
+body.teal-theme .switch-btn:hover{background:linear-gradient(135deg,rgba(0,155,155,.4),rgba(0,110,110,.5));border-color:rgba(0,165,165,.85);box-shadow:0 10px 32px rgba(0,128,128,.6),0 0 45px rgba(0,128,128,.4),0 0 0 1px rgba(255,255,255,.15) inset}
 
 /* Progress bar */
 .progress-container {
@@ -151,6 +167,9 @@ body.blue-theme .switch-btn:hover{background:linear-gradient(135deg,rgba(0,75,15
 }
 body.blue-theme .progress-bar {
   background: linear-gradient(90deg, var(--blue-primary), #4d94ff);
+}
+body.teal-theme .progress-bar {
+  background: linear-gradient(90deg, var(--teal-primary), #4dffff);
 }
 
 /* Visualizer */
@@ -181,6 +200,9 @@ body.blue-theme .progress-bar {
 }
 body.blue-theme .bar {
   background: var(--blue-primary);
+}
+body.teal-theme .bar {
+  background: var(--teal-primary);
 }
 
 /* Bottom attribution */
@@ -228,6 +250,7 @@ body.blue-theme .bar {
   .nav a{padding:8px 16px;font-size:11px}
   .switch-btn{width:45px;height:100px;font-size:28px}
   .switch-btn.left-side{left:20px}
+  .switch-btn.right-side{right:20px}
   .visualizer {width: 300px;}
   .progress-container {width: 300px;}
   .attribution { font-size: 11px; }
@@ -238,6 +261,7 @@ body.blue-theme .bar {
   .nav a{padding:7px 12px;font-size:10px}
   .switch-btn{width:40px;height:80px;font-size:24px}
   .switch-btn.left-side{left:15px}
+  .switch-btn.right-side{right:15px}
   .visualizer {width: 250px;}
   .progress-container {width: 250px;}
   .attribution { font-size: 10px; bottom: 15px; }
@@ -257,16 +281,19 @@ body.blue-theme .bar {
 <div class="attribution" id="attr">made by <a href="https://discord.gg/ERmducCwvK" target="_blank" class="creator-link">cyn</a></div>
 <audio id="a1" loop preload="auto"><source src="Heavy_themarias.mp3" type="audio/mpeg"></audio>
 <audio id="a2" loop preload="auto"><source src="no_one_noticed/No_one_noticed.mp3" type="audio/mpeg"></audio>
+<audio id="a3" loop preload="auto"><source src="sienna/sienna_song.mp3" type="audio/mpeg"></audio>
 <div class="nav" id="n">
   <a href="https://github.com/laincyn" target="_blank">GitHub</a>
   <a href="https://laincyn.github.io/qr_web/" target="_blank">Projects</a>
   <a href="https://discord.gg/ERmducCwvK" target="_blank">Discord</a>
 </div>
-<button class="switch-btn" id="sw">→</button>
+<button class="switch-btn left-side" id="sw-left">←</button>
+<button class="switch-btn right-side" id="sw-right">→</button>
 <script>
 const b=document.getElementById('b'),v=document.getElementById('v'),t=document.getElementById('t'),
       l=document.getElementById('l'),s=document.getElementById('s'),a1=document.getElementById('a1'),
-      a2=document.getElementById('a2'),n=document.getElementById('n'),sw=document.getElementById('sw'),
+      a2=document.getElementById('a2'),a3=document.getElementById('a3'),n=document.getElementById('n'),
+      swLeft=document.getElementById('sw-left'),swRight=document.getElementById('sw-right'),
       i=document.getElementById('i'),body=document.body, particles=document.getElementById('particles'),
       viz=document.getElementById('viz'), pc=document.getElementById('pc'), pb=document.getElementById('pb'),
       attr=document.getElementById('attr');
@@ -324,10 +351,47 @@ const songsData={
       {t:196.86,l:"I'd kinda like it if you'd call me (it's not right)"},{t:201.45,l:"'Cause I'm so over bein' lonely (make you mine)"},
       {t:206.21,l:"I need a virtual connection (take our time)"},{t:211.47,l:"Be my video obsession"}
     ]
+  },
+  sienna:{
+    title:"Sienna - The Marías",
+    vinyl:"sienna/sienna_vinyl.png",
+    audio:a3,
+    theme:"teal",
+    // Lyrics timing adjusted to start at 3:00
+    lyrics:[
+      {t:0.02,l:" "}, // BLANK - first lyric that gets skipped
+    {t:6.67,l:"We've been here long before"},
+    {t:13.18,l:"I live under your eyelids"},{t:19.95,l:"I'll always be yours"},
+    {t:26.07,l:"I'll lay on your rooftop"},{t:29.10,l:"In the freezing cold"},
+    {t:32.37,l:"And I'll watch the sunset"},{t:35.74,l:"Wearing all your clothes"},
+    {t:38.61,l:"I can feel you with me"},{t:42.27,l:"Like I did before"},
+    {t:45.45,l:"Like when I sang you a love song"},{t:48.83,l:"By Norah Jones"},
+    {t:51.41,l:"Sienna"},{t:56.75,l:"Would've been cute"},
+    {t:63.52,l:"Sienna"},{t:71.48,l:"Would look just like you"},
+    {t:77.92,l:"I came clean"},{t:85.67,l:"And it feels so good"},
+    {t:91.18,l:"But i feel seen"},{t:97.79,l:"Only through you"},
+    {t:105.67,l:"I'll wait here tomorrow"},{t:108.21,l:"Outside your door"},
+    {t:111.93,l:"Like i did in december"},{t:114.71,l:"When you held me close"},
+    {t:118.42,l:"Coming up on your corner"},{t:121.38,l:"Pulling out my hair"},
+    {t:124.50,l:"Hear the creak in the floorboards"},{t:127.95,l:"Going up the stairs"},
+    {t:130.25,l:"Sienna"},{t:138.15,l:"Would've been cute"},
+    {t:143.15,l:"Sienna"},{t:151.08,l:"Would look just like you"},
+    {t:156.02,l:"With a temper like you"},{t:158.82,l:"Run around like you"},
+    {t:162.03,l:"Jumping in the pool"},{t:165.19,l:"Like you"},
+    {t:169.13,l:"Sing to all her pets"},{t:171.40,l:"In the way I did"},
+    {t:175.12,l:"Be sensitive"},{t:178.03,l:"Like you"},
+    {t:184.08,l:"And I smile when i think of"},{t:186.48,l:"All the times we had"},
+    {t:189.55,l:"On the beach in the winter"},{t:192.79,l:"When the waves were mad"},
+    {t:196.13,l:"Down by the water"},{t:199.57,l:"Crystal clear"},
+    {t:203.76,l:"See her face in the forest"},{t:205.56,l:"Then it disappears"}
+    ]
   }
 };
 
-let currentSong='heavy',idx=-1,lyricsInterval,firstLyricSkipped=false;
+const songOrder = ['heavy', 'noone', 'sienna'];
+let currentSongIndex = 0;
+let currentSong = songOrder[currentSongIndex];
+let idx=-1,lyricsInterval,firstLyricSkipped=false;
 let visualizerBars = [];
 let isPlaying = false;
 let visualizerInterval;
@@ -377,6 +441,102 @@ function updateProgress() {
   pb.style.width = `${progress}%`;
 }
 
+// Update switch buttons based on current song
+function updateSwitchButtons() {
+  if (currentSongIndex === 0) {
+    // First song - only right button
+    swLeft.classList.remove('visible');
+    swRight.classList.add('visible');
+  } else if (currentSongIndex === songOrder.length - 1) {
+    // Last song - only left button
+    swLeft.classList.add('visible');
+    swRight.classList.remove('visible');
+  } else {
+    // Middle song - both buttons
+    swLeft.classList.add('visible');
+    swRight.classList.add('visible');
+  }
+}
+
+// Switch to next song
+function nextSong() {
+  currentSongIndex = (currentSongIndex + 1) % songOrder.length;
+  switchToSong(songOrder[currentSongIndex]);
+}
+
+// Switch to previous song
+function previousSong() {
+  currentSongIndex = (currentSongIndex - 1 + songOrder.length) % songOrder.length;
+  switchToSong(songOrder[currentSongIndex]);
+}
+
+// Switch to specific song
+function switchToSong(songKey) {
+  const prevSong = currentSong;
+  currentSong = songKey;
+  currentSongIndex = songOrder.indexOf(songKey);
+  const newData = songsData[currentSong];
+  const oldAud = songsData[prevSong].audio;
+  const newAud = newData.audio;
+  
+  if(lyricsInterval)clearInterval(lyricsInterval);
+  
+  swLeft.classList.remove('visible');
+  swRight.classList.remove('visible');
+  viz.classList.remove('visible');
+  pc.classList.remove('visible');
+  attr.classList.remove('visible');
+  
+  t.classList.remove('visible');
+  v.classList.remove('visible');
+  l.classList.remove('visible');
+  s.classList.remove('in','out');
+  s.textContent='';
+  idx=-1;
+  firstLyricSkipped = false;
+  
+  let vol=oldAud.volume;
+  const fadeOut=setInterval(()=>{
+    if(vol>0){vol-=.05;oldAud.volume=Math.max(vol,0)}
+    else{clearInterval(fadeOut);oldAud.pause();oldAud.currentTime=0}
+  },50);
+  
+  setTimeout(()=>{
+    t.textContent=newData.title;
+    i.src=newData.vinyl;
+    
+    // Update theme
+    body.classList.remove('blue-theme', 'teal-theme');
+    if(newData.theme==='blue')body.classList.add('blue-theme');
+    else if(newData.theme==='teal')body.classList.add('teal-theme');
+    
+    newAud.currentTime = currentSong==='sienna' ? 180 : (currentSong==='heavy' ? 99 : 97);
+    newAud.volume=0.7;
+    newAud.play().then(()=>{
+      let v=0;
+      const fadeIn=setInterval(()=>{
+        if(v<0.7){v+=.05;newAud.volume=Math.min(v,0.7)}
+        else clearInterval(fadeIn)
+      },50)
+    });
+    
+    isPlaying = true;
+    i.classList.remove('paused');
+    viz.classList.remove('paused');
+    
+    setTimeout(()=>{
+      v.classList.add('visible');
+      t.classList.add('visible');
+      l.classList.add('visible');
+      updateSwitchButtons();
+      viz.classList.add('visible');
+      pc.classList.add('visible');
+      attr.classList.add('visible');
+      startLyrics();
+    },500);
+  },1500);
+}
+
 // Toggle play/pause when vinyl is clicked
 v.addEventListener('click', function() {
   const aud = songsData[currentSong].audio;
@@ -404,6 +564,10 @@ v.addEventListener('click', function() {
   }
 });
 
+// Event listeners for switch buttons
+swLeft.addEventListener('click', previousSong);
+swRight.addEventListener('click', nextSong);
+
 // Initialize play button visibility
 window.addEventListener('DOMContentLoaded', () => {
   createParticles();
@@ -417,7 +581,7 @@ window.addEventListener('DOMContentLoaded', () => {
 b.onclick=()=>{
   b.classList.add('fade');
   const aud=songsData[currentSong].audio;
-  aud.currentTime=currentSong==='heavy'?99:97;
+  aud.currentTime=currentSong==='sienna' ? 180 : (currentSong==='heavy' ? 99 : 97);
   aud.volume=0.7;
   aud.play().then(()=>{
     let vol=0;
@@ -433,7 +597,7 @@ b.onclick=()=>{
   setTimeout(()=>{t.classList.add('visible');l.classList.add('visible')},1500);
   setTimeout(()=>{
     n.classList.add('visible');
-    sw.classList.add('visible');
+    updateSwitchButtons();
     viz.classList.add('visible');
     pc.classList.add('visible');
     attr.classList.add('visible');
@@ -479,77 +643,6 @@ function startLyrics(){
     }
   },100);
 }
-
-sw.onclick=()=>{
-  const prevSong=currentSong;
-  currentSong=currentSong==='heavy'?'noone':'heavy';
-  const newData=songsData[currentSong];
-  const oldAud=songsData[prevSong].audio;
-  const newAud=newData.audio;
-  
-  if(lyricsInterval)clearInterval(lyricsInterval);
-  
-  sw.classList.remove('visible');
-  viz.classList.remove('visible');
-  pc.classList.remove('visible');
-  attr.classList.remove('visible');
-  
-  setTimeout(()=>{
-    if(currentSong==='noone'){
-      sw.classList.add('left-side');
-      sw.textContent='←';
-    }else{
-      sw.classList.remove('left-side');
-      sw.textContent='→';
-    }
-  },800);
-  
-  t.classList.remove('visible');
-  v.classList.remove('visible');
-  l.classList.remove('visible');
-  s.classList.remove('in','out');
-  s.textContent='';
-  idx=-1;
-  firstLyricSkipped = false;
-  
-  let vol=oldAud.volume;
-  const fadeOut=setInterval(()=>{
-    if(vol>0){vol-=.05;oldAud.volume=Math.max(vol,0)}
-    else{clearInterval(fadeOut);oldAud.pause();oldAud.currentTime=0}
-  },50);
-  
-  setTimeout(()=>{
-    t.textContent=newData.title;
-    i.src=newData.vinyl;
-    if(newData.theme==='blue')body.classList.add('blue-theme');
-    else body.classList.remove('blue-theme');
-    
-    newAud.currentTime=currentSong==='heavy'?99:97;
-    newAud.volume=0.7;
-    newAud.play().then(()=>{
-      let v=0;
-      const fadeIn=setInterval(()=>{
-        if(v<0.7){v+=.05;newAud.volume=Math.min(v,0.7)}
-        else clearInterval(fadeIn)
-      },50)
-    });
-    
-    isPlaying = true;
-    i.classList.remove('paused');
-    viz.classList.remove('paused');
-    
-    setTimeout(()=>{
-      v.classList.add('visible');
-      t.classList.add('visible');
-      l.classList.add('visible');
-      sw.classList.add('visible');
-      viz.classList.add('visible');
-      pc.classList.add('visible');
-      attr.classList.add('visible');
-      startLyrics();
-    },500);
-  },1500);
-};
 
 i.onerror=()=>{
   v.innerHTML='<div style="width:100%;height:100%;border-radius:50%;background:radial-gradient(circle,#1a1a1a 30%,#000 70%);animation:spin 4.5s linear infinite;display:flex;justify-content:center;align-items:center;box-shadow:0 0 40px rgba(0,0,0,.5)"><div style="width:80px;height:80px;border-radius:50%;background:#8b0000;border:3px solid #000"></div></div>'
